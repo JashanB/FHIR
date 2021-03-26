@@ -1,5 +1,7 @@
 {
   "name": "seamless",
   "private": true,
-  "dependencies": {}
+  "dependencies": {},
+  "proxy": "http://localhost:3000"
+
 }

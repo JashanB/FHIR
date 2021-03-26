@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 
 export default function Home(props) {
   //3 buttons to stats, table, histogram
-  useEffect(() => {
-    setOffHome(state => false);
-  }, [])
+  // useEffect(() => {
+  //   props.setOffHome(state => false);
+  // }, [])
   return (
     <div className="main-container">
       <div className="home-container">
