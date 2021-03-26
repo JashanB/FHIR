@@ -8,18 +8,21 @@ import axios from 'axios';
 
 function App() {
   const [offHome, setOffHome] = useState(false);
-
+  const [patientData, setPatientData] = useState([]);
   useEffect(() => {
     async function fetchData() {
       try {
         const patientData = await axios.get(`http://localhost:3001/data`)
         console.log("get", patientData)
+        // setPatientData(state => patientData.data);
+        
       } catch (error) {
         console.error(error)
       }
     }
     fetchData();
   }, [])
+  // console.log(patientData.length)
   //main landing page, 2 buttons to click to histogram and then graph (both full page elements on diff routes)
   //make axios call here, pass state down to children
   return (
