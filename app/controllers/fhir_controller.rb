@@ -1,0 +1,2 @@
+class FhirController < ApplicationController
+end
