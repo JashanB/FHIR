@@ -1,22 +1,31 @@
 import './Home.css';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 export default function Home(props) {
-  //3 buttons to stats, table, histogram
-  // useEffect(() => {
-  //   props.setOffHome(state => false);
-  // }, [])
+  const [redirect, setRedirect] = useState(false);
+  const [redirectLocation, setRedirectLocation] = useState('/stats');
+
+  useEffect(() => {
+    props.setOffHome(state => "home-link");
+  }, []);
+
+  function navigate(location) {
+    setRedirectLocation(state => location);
+    setRedirect(state => true);
+  }
+
   return (
     <div className="main-container">
+      {redirect ? <Redirect to={redirectLocation} /> : null}
       <div className="home-container">
-        <div className="home-button">
+        <div onClick={() => navigate("/stats")} className="home-button">
           <span>Statistics</span>
         </div>
-        <div className="home-button">
+        <div onClick={() => navigate("/histogram")} className="home-button">
           <span>Histogram</span>
         </div>
-        <div className="home-button">
+        <div onClick={() => navigate("/table")} className="home-button">
           <span>Table</span>
         </div>
       </div>
