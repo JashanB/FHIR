@@ -13,14 +13,17 @@ function App() {
     async function fetchData() {
       try {
         const patientData = await axios.get(`http://localhost:3001/data`)
-        console.log("get", patientData)
-        // setPatientData(state => patientData.data);
-        
+        // console.log("get",  patientData.data.data)
+        const object = JSON.parse(patientData.data.data)
+        console.log(object)
+        // console.log("entry", patientData.data.entry)
+        // // setPatientData(state => patientData.data);
+
       } catch (error) {
         console.error(error)
       }
     }
-    fetchData();
+    fetchData()
   }, [])
   // console.log(patientData.length)
   //main landing page, 2 buttons to click to histogram and then graph (both full page elements on diff routes)
@@ -36,7 +39,7 @@ function App() {
           {/* <Route path='/histogram' render={(props) => <Histogram {...props} setOffHome={setOffHome}/>} />
           <Route path='/table' render={(props) => <Table {...props} setOffHome={setOffHome}/>} />
           <Route path='/stats' render={(props) => <Stats {...props} setOffHome={setOffHome}/>} /> */}
-          <Route path='/' render={(props) => <Home {...props} />} setOffHome={setOffHome}/>
+          <Route path='/' render={(props) => <Home {...props} />} setOffHome={setOffHome} />
         </Switch>
       </div>
     </Router>
