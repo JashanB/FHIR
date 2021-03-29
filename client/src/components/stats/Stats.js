@@ -1,6 +1,5 @@
 import './Stats.css';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 
 export default function Stats(props) {
   const [patientAges, setPatientAges] = useState([]);
@@ -17,6 +16,9 @@ export default function Stats(props) {
   useEffect(() => {
     const ageArray = [];
     let totalAge = 0;
+    setNumFemale(state => 0);
+    setNumMale(state => 0);
+    setPaeds(state => 0);
     for (let i = 0; i < props.patientData.length; i++) {
       const currentPatientAge = props.getNumberAge(props.patientData[i].resource.birthDate);
       if (currentPatientAge < 18) {

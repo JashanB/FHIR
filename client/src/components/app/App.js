@@ -6,6 +6,7 @@ import back from './back.png';
 import Home from '../home';
 import axios from 'axios';
 import Stats from '../stats';
+import Table from '../table';
 
 function App() {
   const [offHome, setOffHome] = useState("home-link");
@@ -31,7 +32,7 @@ function App() {
     const age = parseInt(currentYear) - parseInt(number);
     return age;
   }
-  // console.log(patientData.length)
+  console.log(patientData)
   //main landing page, 2 buttons to click to histogram and then graph (both full page elements on diff routes)
   //make axios call here, pass state down to children
   return (
@@ -46,6 +47,7 @@ function App() {
         <Switch>
           {/* <Route path='/histogram' render={(props) => <Histogram {...props} setOffHome={setOffHome}/>} />
           <Route path='/table' render={(props) => <Table {...props} setOffHome={setOffHome}/>} /> */}
+          <Route path='/table' render={(props) => <Table {...props} setOffHome={setOffHome} getNumberAge={getNumberAge} patientData={patientData} />} />
           <Route path='/stats' render={(props) => <Stats {...props} setOffHome={setOffHome} getNumberAge={getNumberAge} patientData={patientData} />} />
           <Route path='/' render={(props) => <Home {...props} setOffHome={setOffHome} />} />
         </Switch>

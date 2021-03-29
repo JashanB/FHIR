@@ -1,0 +1,73 @@
+.table-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%;
+  padding-top: 100px;
+  box-sizing: border-box;
+  width: 80%;
+  margin: 0 auto 0 auto;
+  max-width: 1180px;
+
+}
+.buttons-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-height: 50px;
+  width: 100%;
+}
+.buttons-row div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 500;
+}
+.button-selected {
+  flex-grow: 1;
+  cursor: pointer;
+  border: 2px solid #054f89;
+  border-radius: 5px;
+  color: #ffffff;
+  background-color: #054f89;
+}
+.button {
+  flex-grow: 1;
+  cursor: pointer;
+  border: 2px solid #054f89;
+  border-radius: 5px;
+  color: #054f89;
+
+}
+.table-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-height: 50px;
+  width: 100%;
+  border-bottom: 1px solid #121212;
+}
+.table-header div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #054f89;
+  font-size: 18px;
+  font-weight: 500;
+}
+.header-1, .table-row-1 {
+  width: 25%;
+}
+.header-2, .table-row-2 {
+  width: 25%;
+}
+.header-3, .table-row-3 {
+  width: 12.5%;
+}
+.header-4, .table-row-4 {
+  width: 25%;
+}
+.header-5, .table-row-5 {
+  width: 12.5%;
+}
