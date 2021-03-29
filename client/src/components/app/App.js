@@ -7,6 +7,7 @@ import Home from '../home';
 import axios from 'axios';
 import Stats from '../stats';
 import Table from '../table';
+import Histogram from '../histogram';
 
 function App() {
   const [offHome, setOffHome] = useState("home-link");
@@ -45,8 +46,7 @@ function App() {
           </div>
         </div>
         <Switch>
-          {/* <Route path='/histogram' render={(props) => <Histogram {...props} setOffHome={setOffHome}/>} />
-          <Route path='/table' render={(props) => <Table {...props} setOffHome={setOffHome}/>} /> */}
+          <Route path='/histogram' render={(props) => <Histogram {...props} setOffHome={setOffHome} getNumberAge={getNumberAge} patientData={patientData} />} />
           <Route path='/table' render={(props) => <Table {...props} setOffHome={setOffHome} getNumberAge={getNumberAge} patientData={patientData} />} />
           <Route path='/stats' render={(props) => <Stats {...props} setOffHome={setOffHome} getNumberAge={getNumberAge} patientData={patientData} />} />
           <Route path='/' render={(props) => <Home {...props} setOffHome={setOffHome} />} />

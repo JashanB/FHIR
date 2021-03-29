@@ -2,9 +2,9 @@ import './Table.css';
 import { useState, useEffect } from 'react';
 import TableItem from './tableItem';
 
-export default function Table(props) {
+export default function Table({getNumberAge, setOffHome, patientData }) {
   const [displayData, setDisplayData] = useState([]);
-  const [reverse, setReverse] = useState(true);
+  const [reverse, setReverse] = useState("start");
   const [sortButtons, setSortButtons] = useState(["button-selected", "button"]);
   const [under, setUnder] = useState(false);
   const [over, setOver] = useState(false);
@@ -12,20 +12,19 @@ export default function Table(props) {
   const [ageButtons, setAgeButtons] = useState(["button-selected", "button", "button"]);
   
   useEffect(() => {
-    props.setOffHome(state => "off-home-link");
-  }, []);
+    setOffHome(state => "off-home-link");
+  }, [setOffHome]);
 
   function compare(a,b) {
-    let num = 0;
-    if (props.getNumberAge(a.resource.birthDate) < props.getNumberAge(b.resource.birthDate)) {
-      reverse ? num = 1 : num = -1; 
+    if (getNumberAge(a.resource.birthDate) < getNumberAge(b.resource.birthDate)) {
+      return -1; 
     }
-    if (props.getNumberAge(a.resource.birthDate) > props.getNumberAge(b.resource.birthDate)) {
-      reverse ? num = -1 : num = 1; 
+    if (getNumberAge(a.resource.birthDate) > getNumberAge(b.resource.birthDate)) {
+      return 1; 
     }
-    return num;
+    return 0;
   }
-
+console.log(reverse)
   function ageButtonClick(index) {
     if (index === 0) {
       setAgeButtons(state => ["button-selected", "button", "button"]);
@@ -45,46 +44,38 @@ export default function Table(props) {
     }
   }
 
-  function sortButtonClicked(index) {
-    reverse ? setReverse(state => false) : setReverse(state => true);
-    if (index === 0) {
-      setSortButtons(state => ["button-selected", "button"]);
-    } else if (index === 1) {
-      setSortButtons(state => ["button", "button-selected"]);
-    }
+  function sortAscending () {
+    setReverse(state => true);
+    setSortButtons(state => ["button", "button-selected"]);
   }
-  // useEffect(() => {
-  //   const sortedData = props.patientData.sort(compare);
-  //   setDisplayData(state => sortedData);
-  // }, [props.patientData, reverse])
+
+  function sortDescending () {
+    setReverse(state => false);
+    setSortButtons(state => ["button-selected", "button"]);  
+  }
 
   useEffect(() => {
     if (under) {
-      const underItems = props.patientData.filter(function(item) {
-        if (props.getNumberAge(item.resource.birthDate) < 18) {
+      const underItems = patientData.filter(function(item) {
+        if (getNumberAge(item.resource.birthDate) < 18) {
           return item;
         }
       })
-      const sortedUnder = underItems.sort(compare);
-      setDisplayData(state => sortedUnder);
+      reverse ? setDisplayData(state => underItems.sort(compare)) : setDisplayData(state => underItems.sort(compare).reverse());
     }
     if (over) {
-      const overItems = props.patientData.filter(function(item) {
-        if (props.getNumberAge(item.resource.birthDate) >= 18) {
+      const overItems = patientData.filter(function(item) {
+        if (getNumberAge(item.resource.birthDate) >= 18) {
           return item;
         }
       })
-      const sortedOver = overItems.sort(compare);
-      setDisplayData(state => sortedOver);
+      reverse ? setDisplayData(state => overItems.sort(compare)) : setDisplayData(state => overItems.sort(compare).reverse());
     }
     if (all) {
-      const sortedData = props.patientData.sort(compare);
-      setDisplayData(state => sortedData);
+      reverse ? setDisplayData(state => patientData.sort(compare).reverse()) : setDisplayData(state => patientData.sort(compare));
     }
-  }, [under, over, all, reverse, props.patientData]);
+  }, [under, over, all, patientData, reverse]);
 
-  //buttons: date asc/desc
-  //filters: <18, >18, m/f
   const tableRows = displayData.map(function (item) {
     if (displayData.length > 0) {
       let name = ""
@@ -116,8 +107,8 @@ export default function Table(props) {
     <div className="main-container">
       <div className="table-container">
         <div className="buttons-row">
-          <div onClick={() => sortButtonClicked(0)} className={sortButtons[0]}><span>Age Descending</span></div>
-          <div onClick={() => sortButtonClicked(1)} className={sortButtons[1]}><span>Age Ascending</span></div>
+          <div onClick={() => sortDescending()} className={sortButtons[0]}><span>Age Descending</span></div>
+          <div onClick={() => sortAscending()} className={sortButtons[1]}><span>Age Ascending</span></div>
         </div>
         <div className="buttons-row">
           <div onClick={() => ageButtonClick(0)} className={ageButtons[0]}><span>All Ages</span></div>
