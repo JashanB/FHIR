@@ -4,7 +4,6 @@ import TableItem from './tableItem';
 
 export default function Table({getNumberAge, setOffHome, patientData }) {
   const [displayData, setDisplayData] = useState([]);
-  const [reverse, setReverse] = useState("start");
   const [sortButtons, setSortButtons] = useState(["button-selected", "button"]);
   const [under, setUnder] = useState(false);
   const [over, setOver] = useState(false);
@@ -14,7 +13,7 @@ export default function Table({getNumberAge, setOffHome, patientData }) {
   useEffect(() => {
     setOffHome(state => "off-home-link");
   }, [setOffHome]);
-
+  //compare function to sort based on age
   function compare(a,b) {
     if (getNumberAge(a.resource.birthDate) < getNumberAge(b.resource.birthDate)) {
       return -1; 
@@ -24,7 +23,7 @@ export default function Table({getNumberAge, setOffHome, patientData }) {
     }
     return 0;
   }
-console.log(reverse)
+  //handle click of different age buttons
   function ageButtonClick(index) {
     if (index === 0) {
       setAgeButtons(state => ["button-selected", "button", "button"]);
@@ -43,39 +42,41 @@ console.log(reverse)
       setOver(state => true);
     }
   }
-
+  //handle ascending age sort
   function sortAscending () {
-    setReverse(state => true);
+    setDisplayData(state => state.sort(compare))
     setSortButtons(state => ["button", "button-selected"]);
   }
-
+  //handle descending age sort
   function sortDescending () {
-    setReverse(state => false);
+    setDisplayData(state => state.sort(compare).reverse())
     setSortButtons(state => ["button-selected", "button"]);  
   }
-
+  //set display data based on ages selected
   useEffect(() => {
-    if (under) {
-      const underItems = patientData.filter(function(item) {
-        if (getNumberAge(item.resource.birthDate) < 18) {
-          return item;
-        }
-      })
-      reverse ? setDisplayData(state => underItems.sort(compare)) : setDisplayData(state => underItems.sort(compare).reverse());
+    if (patientData.length > 0) {
+      if (under) {
+        const underItems = patientData.filter(function(item) {
+          if (getNumberAge(item.resource.birthDate) < 18) {
+            return item;
+          }
+        })
+        setDisplayData(state => underItems.sort(compare).reverse());
+      }
+      if (over) {
+        const overItems = patientData.filter(function(item) {
+          if (getNumberAge(item.resource.birthDate) >= 18) {
+            return item;
+          }
+        })
+        setDisplayData(state => overItems.sort(compare).reverse());
+      }
+      if (all) {
+        setDisplayData(state => patientData.sort(compare).reverse());
+      }
     }
-    if (over) {
-      const overItems = patientData.filter(function(item) {
-        if (getNumberAge(item.resource.birthDate) >= 18) {
-          return item;
-        }
-      })
-      reverse ? setDisplayData(state => overItems.sort(compare)) : setDisplayData(state => overItems.sort(compare).reverse());
-    }
-    if (all) {
-      reverse ? setDisplayData(state => patientData.sort(compare).reverse()) : setDisplayData(state => patientData.sort(compare));
-    }
-  }, [under, over, all, patientData, reverse]);
-
+  }, [under, over, all, patientData]);
+  //generate table rows
   const tableRows = displayData.map(function (item) {
     if (displayData.length > 0) {
       let name = ""

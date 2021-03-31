@@ -26,11 +26,11 @@
 }
 .button-selected {
   flex-grow: 1;
-  cursor: pointer;
   border: 2px solid #054f89;
   border-radius: 5px;
   color: #ffffff;
   background-color: #054f89;
+  pointer-events: none;
 }
 .button {
   flex-grow: 1;
@@ -38,7 +38,7 @@
   border: 2px solid #054f89;
   border-radius: 5px;
   color: #054f89;
-
+  pointer-events: auto;
 }
 .table-header {
   display: flex;

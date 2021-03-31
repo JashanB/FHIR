@@ -12,7 +12,7 @@ import Histogram from '../histogram';
 function App() {
   const [offHome, setOffHome] = useState("home-link");
   const [patientData, setPatientData] = useState([]);
-
+  //initial API call
   useEffect(() => {
     async function fetchData() {
       try {
@@ -25,7 +25,7 @@ function App() {
     }
     fetchData()
   }, [])
-
+  //function to get age as int - to be passed down
   function getNumberAge(string) {
     const number = string.split("-")[0];
     const date = new Date();
@@ -33,9 +33,7 @@ function App() {
     const age = parseInt(currentYear) - parseInt(number);
     return age;
   }
-  console.log(patientData)
-  //main landing page, 2 buttons to click to histogram and then graph (both full page elements on diff routes)
-  //make axios call here, pass state down to children
+
   return (
     <Router>
       <div className="App">
